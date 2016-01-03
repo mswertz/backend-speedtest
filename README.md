@@ -48,6 +48,7 @@ solr
 # Results on a macbook pro 2015/13" (2.7Ghz, SSD)
 
 | test | no. inserts | time (ms) | inserts per second |
+|------|-------------|-----------|--------------------|
 | MySql | | | |
 | MysqlHundredVarcharColumn | 100000 | 10629ms | 9408.222786715589 inserts per second |
 | MysqlHundredIntColumn | 100000 | 8836ms | 11317.338162064283 inserts per second |
