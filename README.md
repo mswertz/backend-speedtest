@@ -49,27 +49,22 @@ solr
 
 | test | no. inserts | time (ms) | inserts per second |
 |------|-------------|-----------|--------------------|
-| MySql | | | |
-| MysqlHundredVarcharColumn | 100000 | 10629ms | 9408.222786715589 inserts per second |
-| MysqlHundredIntColumn | 100000 | 8836ms | 11317.338162064283 inserts per second |
-| MysqlOneIntColumn | 100000 | 392ms | 255102.04081632654 inserts per second |
-| H2 | | | |
-| H2HundredVarcharColumn | 100000 | 5841ms | 17120.35610340695 inserts per second |
-| H2HundredIntColumn | 100000 | 3147ms | 31776.294884016523 inserts per second |
-| H2oneIntColumn | 100000 | 582ms | 171821.3058419244 inserts per second |
 | H2ThousandVarcharColumn | 100000 | 34094ms | 2933.0674018888953 inserts per second |
 | H2TenThousandVarcharColumn | 100000 | 341376ms | 292.9321334833146 inserts per second |
-| Postgresql | | | |
+| MysqlHundredVarcharColumn | 100000 | 10629ms | 9408.222786715589 inserts per second |
+| H2HundredVarcharColumn | 100000 | 5841ms | 17120.35610340695 inserts per second |
 | PostgresqlHundredVarcharColumn | 100000 | 22763ms | 4393.094056143742 inserts per second |
 | PostgresqlCopyHundredVarchar | 100000 | 4693ms | 21308.331557639038 inserts per second |
-| PostgresqlHundredIntColumn | 100000 | 13122ms | 7620.789513793629 inserts per second |
-| PostgresqlOneIntColumn inserted 100000 | 2381ms | is 41999.160016799666 inserts per second |
-| Mongo | | | |
 | MongoHundredVarchar | 100000 | 8600ms | 11627.906976744185 inserts per second |
-| MongoHundredInt | 100000 | 6917ms | 14457.134595923088 inserts per second |
-| MongoOneInt | 100000 | 1236ms | 80906.14886731391 inserts per second |
-| Cassandra | | | | 
 | CassandraHundredVarchar | 100000 | time 35502ms | 2816.742718720072 inserts per second |
+| MysqlHundredIntColumn | 100000 | 8836ms | 11317.338162064283 inserts per second |
+| H2HundredIntColumn | 100000 | 3147ms | 31776.294884016523 inserts per second |
+| PostgresqlHundredIntColumn | 100000 | 13122ms | 7620.789513793629 inserts per second |
+| MongoHundredInt | 100000 | 6917ms | 14457.134595923088 inserts per second |
+| MysqlOneIntColumn | 100000 | 392ms | 255102.04081632654 inserts per second |
+| H2oneIntColumn | 100000 | 582ms | 171821.3058419244 inserts per second |
+| PostgresqlOneIntColumn inserted 100000 | 2381ms | is 41999.160016799666 inserts per second |
+| MongoOneInt | 100000 | 1236ms | 80906.14886731391 inserts per second |
 
 MySQL uses innoDB, marginally optimized using larger cache sizes
 N.B. when using MySql WITHOUT rewriteBatchedStatements speed is 4698.5857256965655, 5229.851995188536 and 12799.180852425445; that is factor 2.
