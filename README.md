@@ -33,6 +33,7 @@ solr
 # Features
 
 | feature | postgresql | mysql | H2 | derby | hsql |
+|---------|------------|-------|----|-------|------|
 | max row size | 8kB (not varhcar/text) | 1.6TB (!) | ? | unlimited | unlimited |
 | transactions | innoDB | y | y | y | ? |
 | max cols | 250-1600 | 1000 | unlimited |1012 | unlimited |

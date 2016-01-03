@@ -1,0 +1,9 @@
+.classpath
+.project
+.settings/
+data/
+graph/
+target/
+testdb.log
+testdb.properties
+testdb.script
