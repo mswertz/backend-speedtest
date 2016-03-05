@@ -75,6 +75,7 @@ solr
 | postgresl | 138ms |
 | mysql | 108ms |
 | H2 | 196ms |
+| mongo | 226ms |
 
 
 MySQL uses innoDB, marginally optimized using larger cache sizes

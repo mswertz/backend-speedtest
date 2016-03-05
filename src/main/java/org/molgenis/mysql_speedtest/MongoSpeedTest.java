@@ -9,6 +9,7 @@ import org.bson.Document;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 
 public class MongoSpeedTest
 {
@@ -27,36 +28,47 @@ public class MongoSpeedTest
 					return new Document("i", i);
 				}
 			});
-			
+
 			// test two
 			run(database, "MongoHundredVarchar", new DocumentGenerator()
 			{
 				public Document getDocument(int i)
 				{
-					
+
 					Document d = new Document("id", i);
-					for(int j = 0; j< 100; j++)
+					for (int j = 0; j < 100; j++)
 					{
-						d.append("col"+j, "value"+j);
+						d.append("col" + j, "value" + j);
 					}
 					return d;
 				}
 			});
-			
+
 			// test two
 			run(database, "MongoHundredInt", new DocumentGenerator()
 			{
 				public Document getDocument(int i)
 				{
-					
+
 					Document d = new Document("id", i);
-					for(int j = 0; j< 100; j++)
+					for (int j = 0; j < 100; j++)
 					{
-						d.append("col"+j, j);
+						d.append("col" + j, j);
 					}
 					return d;
 				}
 			});
+
+			// test query
+			StopWatch s = new StopWatch();
+			s.start();
+			long count = database.getCollection("MongoOneInt").count(Filters.gt("i", 50000));
+			for (Document d : database.getCollection("MongoOneInt").find(Filters.gt("i", 50000)))
+			{
+				//System.out.println(d.get("i"));
+			}
+			System.out.println(" Count+retrieve " + count + " in " + s.getTime() + "ms, is "
+					+ count * 1000.0 / s.getTime() + " records per second");
 
 			mongoClient.close();
 		}
@@ -76,6 +88,7 @@ public class MongoSpeedTest
 	private static void run(MongoDatabase database, String type, DocumentGenerator gen)
 	{
 		MongoCollection<Document> collection = database.getCollection(type);
+		collection.drop();
 		StopWatch s = new StopWatch();
 		s.start();
 		List<Document> documents = new ArrayList<Document>();
@@ -91,9 +104,6 @@ public class MongoSpeedTest
 		}
 		if (documents.size() > 0) collection.insertMany(documents);
 		printTime(type, size, s);
-		
-		collection.drop();
-
 	}
 
 	public static void printTime(String type, int count, StopWatch s)
