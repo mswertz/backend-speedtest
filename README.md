@@ -71,6 +71,7 @@ solr
 |------|-------------|-----------|--------------------|
 | MysqlOneIntColumn | 100000 | 392ms | 255102.04081632654 inserts per second |
 | H2oneIntColumn | 100000 | 582ms | 171821.3058419244 inserts per second |
+| PostgresqlCopyOneInt | 100000 | 918ms | 108932.46187363834 records per second |
 | MongoOneInt | 100000 | 1236ms | 80906.14886731391 inserts per second |
 | PostgresqlOneIntColumn | 100000 | 2381ms | 41999.160016799666 inserts per second |
 

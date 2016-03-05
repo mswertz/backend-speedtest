@@ -73,9 +73,9 @@ public class PsqlSpeedTest
 		{
 			e.printStackTrace();
 		}
-		
+
 		// 4: using copy
-		type = "PostgresqlCopyHundredIntr";
+		type = "PostgresqlCopyHundredInt";
 		try
 		{
 			Connection conn = DriverManager.getConnection(url);
@@ -104,6 +104,50 @@ public class PsqlSpeedTest
 				{
 					sb.append("," + j);
 				}
+				sb.append("\n");
+
+				if (i % 100 == 0)
+				{
+					// System.out.println("COPY "+type+"("+colClause+") FROM STDIN");
+					copyManager.copyIn("COPY " + type + "(" + colClause + ") FROM STDIN WITH DELIMITER ','",
+							new StringReader(sb.toString()));
+					sb = new StringBuilder();
+				}
+			}
+			copyManager.copyIn("COPY " + type + "(" + colClause + ") FROM STDIN WITH DELIMITER ','",
+					new StringReader(sb.toString()));
+			printTime(type, size, s);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		type = "PostgresqlCopyOneInt";
+		try
+		{
+			Connection conn = DriverManager.getConnection(url);
+			CopyManager copyManager = new CopyManager((BaseConnection) conn);
+
+			// create
+			String colDef = "id serial primary key";
+			String colClause = "id";
+			colDef += ", no int";
+			colClause += ",no";
+
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate("DROP TABLE IF EXISTS " + type);
+			stmt.executeUpdate("CREATE TABLE " + type + "(" + colDef + ") WITH (OIDS=FALSE)");
+
+			StopWatch s = new StopWatch();
+			s.start();
+			StringBuilder sb = new StringBuilder();
+			for (int i = 1; i <= size; i++)
+			{
+				sb.append(i);
+
+				sb.append("," + i);
+
 				sb.append("\n");
 
 				if (i % 100 == 0)
@@ -216,7 +260,7 @@ public class PsqlSpeedTest
 
 		// test count/read
 		Connection conn = DriverManager.getConnection(url);
-		
+
 		StopWatch s = new StopWatch();
 		s.start();
 
@@ -236,7 +280,7 @@ public class PsqlSpeedTest
 		}
 
 		System.out.println(" Count+retrieved " + count + " in " + s.getTime() + "ms, is " + count * 1000.0 / s.getTime()
-		+ " records per second");
+				+ " records per second");
 
 	}
 
@@ -307,7 +351,7 @@ public class PsqlSpeedTest
 	public static void printTime(String type, int count, StopWatch s)
 	{
 		// correct for ms so times 1000.0
-		System.out.println(type + count + " in " + s.getTime() + "ms, is " + count * 1000.0 / s.getTime()
-				+ " records per second");
+		System.out.println(
+				type + count + " in " + s.getTime() + "ms, is " + count * 1000.0 / s.getTime() + " records per second");
 	}
 }
