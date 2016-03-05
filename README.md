@@ -60,7 +60,7 @@ solr
 | test | no. inserts | time (ms) | inserts per second |
 |------|-------------|-----------|--------------------|
 | H2HundredIntColumn | 100000 | 3147ms | 31776.294884016523 inserts per second |
-| PostgresqlCopyHundredInt | 100000 | 3637 | 27495.188342040143 inserts per second |
+| PostgresqlCopyHundredInt | 100000 | 3637ms | 27495.188342040143 inserts per second |
 | MongoHundredInt | 100000 | 6917ms | 14457.134595923088 inserts per second |
 | MysqlHundredIntColumn | 100000 | 8836ms | 11317.338162064283 inserts per second |
 | PostgresqlHundredIntColumn | 100000 | 13122ms | 7620.789513793629 inserts per second |
