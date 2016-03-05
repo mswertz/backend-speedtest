@@ -47,6 +47,7 @@ solr
 
 # Results on a macbook pro 2015/13" (2.7Ghz, SSD)
 
+## Inserts
 | test | no. inserts | time (ms) | inserts per second |
 |------|-------------|-----------|--------------------|
 | H2ThousandVarcharColumn | 100000 | 34094ms | 2933.0674018888953 inserts per second |
@@ -65,6 +66,16 @@ solr
 | H2oneIntColumn | 100000 | 582ms | 171821.3058419244 inserts per second |
 | PostgresqlOneIntColumn | 100000 | 2381ms | 41999.160016799666 inserts per second |
 | MongoOneInt | 100000 | 1236ms | 80906.14886731391 inserts per second |
+
+## count + retrieve of table with one int column 'where x > 50000' out of 100000
+(timing of second run was taken)
+
+| test | result |
+|------|--------|
+| postgresl | 138ms |
+| mysql | 108ms |
+| H2 | 196ms |
+
 
 MySQL uses innoDB, marginally optimized using larger cache sizes
 N.B. when using MySql WITHOUT rewriteBatchedStatements speed is 4698.5857256965655, 5229.851995188536 and 12799.180852425445; that is factor 2.

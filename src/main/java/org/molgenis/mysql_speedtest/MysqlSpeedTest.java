@@ -3,6 +3,7 @@ package org.molgenis.mysql_speedtest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -110,6 +111,30 @@ public class MysqlSpeedTest
 				pstmt.setInt(1, i);
 			}
 		});
+		
+		// test count/read
+		Connection conn = DriverManager.getConnection(url);
+		
+		StopWatch s = new StopWatch();
+		s.start();
+
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery("select count(*) from MysqlOneIntColumn where no > 50000");
+		rs.next();
+		int count = rs.getInt(1);
+		rs.close();
+		stmt.close();
+
+		stmt = conn.createStatement();
+		rs = stmt.executeQuery("select * from MysqlOneIntColumn where no > 50000");
+
+		while (rs.next())
+		{
+			rs.getInt(1);
+		}
+
+		System.out.println(" Count+retrieve " + count + " in " + s.getTime() + "ms, is " + count * 1000.0 / s.getTime()
+		+ " records per second");
 	}
 	
 	public static interface BenchMark{
