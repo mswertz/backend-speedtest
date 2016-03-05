@@ -47,33 +47,40 @@ solr
 
 # Results on a macbook pro 2015/13" (2.7Ghz, SSD)
 
-## Inserts
+## Insert hundredvarchar
 | test | no. inserts | time (ms) | inserts per second |
 |------|-------------|-----------|--------------------|
-| H2ThousandVarcharColumn | 100000 | 34094ms | 2933.0674018888953 inserts per second |
-| H2TenThousandVarcharColumn | 100000 | 341376ms | 292.9321334833146 inserts per second |
-| MysqlHundredVarcharColumn | 100000 | 10629ms | 9408.222786715589 inserts per second |
-| H2HundredVarcharColumn | 100000 | 5841ms | 17120.35610340695 inserts per second |
-| PostgresqlHundredVarcharColumn | 100000 | 22763ms | 4393.094056143742 inserts per second |
 | PostgresqlCopyHundredVarchar | 100000 | 4693ms | 21308.331557639038 inserts per second |
+| H2HundredVarcharColumn | 100000 | 5841ms | 17120.35610340695 inserts per second |
+| MysqlHundredVarcharColumn | 100000 | 10629ms | 9408.222786715589 inserts per second |
 | MongoHundredVarchar | 100000 | 8600ms | 11627.906976744185 inserts per second |
-| CassandraHundredVarchar | 100000 | 35502ms | 2816.742718720072 inserts per second |
-| MysqlHundredIntColumn | 100000 | 8836ms | 11317.338162064283 inserts per second |
+| PostgresqlHundredVarcharColumn | 100000 | 22763ms | 4393.094056143742 inserts per second |
+
+## Insert hundredint
+| test | no. inserts | time (ms) | inserts per second |
+|------|-------------|-----------|--------------------|
 | H2HundredIntColumn | 100000 | 3147ms | 31776.294884016523 inserts per second |
-| PostgresqlHundredIntColumn | 100000 | 13122ms | 7620.789513793629 inserts per second |
+| PostgresqlCopyHundredInt | 100000 | 3637 | 27495.188342040143 inserts per second |
 | MongoHundredInt | 100000 | 6917ms | 14457.134595923088 inserts per second |
+| MysqlHundredIntColumn | 100000 | 8836ms | 11317.338162064283 inserts per second |
+| PostgresqlHundredIntColumn | 100000 | 13122ms | 7620.789513793629 inserts per second |
+| CassandraHundredVarchar | 100000 | 35502ms | 2816.742718720072 inserts per second |
+
+## Insert one int
+| test | no. inserts | time (ms) | inserts per second |
+|------|-------------|-----------|--------------------|
 | MysqlOneIntColumn | 100000 | 392ms | 255102.04081632654 inserts per second |
 | H2oneIntColumn | 100000 | 582ms | 171821.3058419244 inserts per second |
-| PostgresqlOneIntColumn | 100000 | 2381ms | 41999.160016799666 inserts per second |
 | MongoOneInt | 100000 | 1236ms | 80906.14886731391 inserts per second |
+| PostgresqlOneIntColumn | 100000 | 2381ms | 41999.160016799666 inserts per second |
 
 ## count + retrieve of table with one int column 'where x > 50000' out of 100000
 (timing of second run was taken)
 
 | test | result |
 |------|--------|
-| postgresl | 138ms |
 | mysql | 108ms |
+| postgresl | 138ms |
 | H2 | 196ms |
 | mongo | 226ms |
 

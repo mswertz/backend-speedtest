@@ -73,6 +73,55 @@ public class PsqlSpeedTest
 		{
 			e.printStackTrace();
 		}
+		
+		// 4: using copy
+		type = "PostgresqlCopyHundredIntr";
+		try
+		{
+			Connection conn = DriverManager.getConnection(url);
+			CopyManager copyManager = new CopyManager((BaseConnection) conn);
+
+			// create
+			int cols = 100;
+			String colDef = "id serial primary key";
+			String colClause = "id";
+			for (int i = 0; i < cols; i++)
+			{
+				colDef += ", col" + i + " int";
+				colClause += ",col" + i;
+			}
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate("DROP TABLE IF EXISTS " + type);
+			stmt.executeUpdate("CREATE TABLE " + type + "(" + colDef + ") WITH (OIDS=FALSE)");
+
+			StopWatch s = new StopWatch();
+			s.start();
+			StringBuilder sb = new StringBuilder();
+			for (int i = 1; i <= size; i++)
+			{
+				sb.append(i);
+				for (int j = 0; j < cols; j++)
+				{
+					sb.append("," + j);
+				}
+				sb.append("\n");
+
+				if (i % 100 == 0)
+				{
+					// System.out.println("COPY "+type+"("+colClause+") FROM STDIN");
+					copyManager.copyIn("COPY " + type + "(" + colClause + ") FROM STDIN WITH DELIMITER ','",
+							new StringReader(sb.toString()));
+					sb = new StringBuilder();
+				}
+			}
+			copyManager.copyIn("COPY " + type + "(" + colClause + ") FROM STDIN WITH DELIMITER ','",
+					new StringReader(sb.toString()));
+			printTime(type, size, s);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 
 		// runBenchmark(size, new BenchMark(){
 		// int cols = 100;
